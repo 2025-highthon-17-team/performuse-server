@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_SCHEMA}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        transaction.jta.platform: org.hibernate.service.jta.JtaPlatform
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+  cloud:
+    aws:
+      credentials:
+        access-key: ${AWS_ACCESS_KEY}
+        secret-key: ${AWS_SECRET_KEY}
+      region:
+        static: ap-northeast-2
+      s3:
+        bucket: ${AWS_BUCKET}
+
+jwt:
+  access-key: ${JWT_ACCESS_KEY}
+  refresh-key: ${JWT_REFRESH_KEY}
+
+logging:
+  level:
+    root: DEBUG
+    org.springframework: DEBUG

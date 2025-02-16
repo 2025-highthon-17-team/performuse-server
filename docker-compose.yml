@@ -1,0 +1,13 @@
+services:
+
+    toongether-server:
+        container_name: performuse-server
+        image: rlawhddbs/performuse-server:latest
+        volumes:
+          - /logs:/app/logs
+        restart: no
+        environment:
+          TZ: Asia/Seoul
+          PROFILE: prod
+        ports:
+            - "8080:8080"

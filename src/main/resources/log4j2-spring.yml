@@ -1,0 +1,41 @@
+Configuration:
+
+  Properties:
+    Property:
+      - name: "date-format-pattern"
+        value: "{yyyy-MM-dd HH:mm:ss.SSS}"
+      - name: "log-pattern"
+        value: "%d${date-format-pattern} [%style{${spring:spring.profiles.active}}{yellow}] %highlight{%5p}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} %style{${sys:PID}}{magenta} [%15.15t] %style{%-40.40C{1.}}{cyan} : %msg%n%throwable"
+      - name: "charset-utf-8"
+        value: "UTF-8"
+
+  Appenders:
+    Console:
+      name: ConsoleAppender
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: "${log-pattern}"
+    RollingFile:
+      name: FileAppender
+      fileName: "logs/performuse-server.log"
+      filePattern: "logs/performuse-server-%d{yyyy-MM-dd}-%i.log"
+      PatternLayout:
+        pattern: "${log-pattern}"
+        disableAnsi: true
+      Policies:
+        SizeBasedTriggeringPolicy:
+          size: "200KB"
+        TimeBasedTriggeringPolicy:
+          interval: "1"
+      DefaultRollOverStrategy:
+        Delete:
+          basePath: "logs/"
+          IfLastModified:
+            age: "1d"
+
+  Loggers:
+    Root:
+      level: info
+      AppenderRef:
+        - ref: ConsoleAppender
+        - ref: FileAppender
